@@ -6,11 +6,15 @@
   "core": [
    "FulfillmentByAmazon",
    "AmazonSeller",
-   "AmazonFBA"
+   "AmazonFBA",
+   "shopify",
+   "ecommerce"
   ],
   "fringe": [
-   "ecommerce",
-   "smallbusiness"
+   "woocommerce",
+   "smallbusiness",
+   "Etsy",
+   "ebay"
   ]
  },
  "search_queries": [
@@ -117,6 +121,18 @@
    "(which|what|best|recommend\\w*).{0,40}(accounting|bookkeeping) (software|tool|app)",
    "(alternative to|instead of).{0,30}(quickbooks|xero|a2x|link my books|sellerboard|taxdoo)",
    "how do (you|people) do (your |their )?(books|bookkeeping|accounting)"
+  ]
+ },
+ "discovery": {
+  "_comment": "One request every N runs to find communities we are not watching yet. Results land in data/subreddits.json with watching=false; promote by hand into subreddits.core.",
+  "every_n_runs": 12,
+  "queries": [
+   "bol.com verkopen",
+   "ecommerce nederland ondernemen",
+   "onlinehandel ecommerce deutschland",
+   "amazon seller europe VAT",
+   "kaufland otto marketplace seller",
+   "shopify payouts accounting"
   ]
  }
 }

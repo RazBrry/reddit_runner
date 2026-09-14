@@ -31,6 +31,7 @@ CONFIG_PATH = ROOT / "config.json"
 STATE_PATH = DATA / "state.json"
 CANDIDATES_PATH = DATA / "candidates.jsonl"
 HEALTH_PATH = DATA / "health.json"
+SUBREDDITS_PATH = DATA / "subreddits.json"
 
 # Reddit's public feeds allow roughly one request per minute per client.
 # The x-ratelimit-remaining header always reads 0.0 and is useless as a guide;
@@ -291,6 +292,32 @@ def main() -> int:
                 "seen_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 "reviewed": False,
             })
+
+    # Every Nth run, spend one request finding communities we are not watching
+    # yet. Guessing subreddit names from a chat window is slow and wrong; the
+    # rotation has minutes to spare and nobody is waiting on it.
+    disc = cfg.get("discovery", {})
+    every = int(disc.get("every_n_runs", 0) or 0)
+    queries = disc.get("queries", [])
+    if every and queries and state.get("runs", 0) % every == 0:
+        q = queries[(state.get("runs", 0) // every) % len(queries)]
+        time.sleep(MIN_INTERVAL_S)
+        url = ("https://www.reddit.com/subreddits/search/.rss?"
+               + urllib.parse.urlencode({"q": q}))
+        status, xml = fetch(url, ua)
+        known = load_json(SUBREDDITS_PATH, {})
+        if status == 200:
+            for e in parse_entries(xml):
+                m = re.search(r"/r/([^/\"]+)", e["permalink"])
+                if not m:
+                    continue
+                name = m.group(1)
+                if name not in known:
+                    known[name] = {"first_seen_via": q,
+                                   "blurb": e["body"][:180],
+                                   "watching": False}
+            save_json(SUBREDDITS_PATH, known)
+        print(f"  discovery [{status}] '{q}' -> {len(known)} subreddits known")
 
     if new_rows:
         CANDIDATES_PATH.parent.mkdir(parents=True, exist_ok=True)
