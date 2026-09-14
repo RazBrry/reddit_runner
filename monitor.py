@@ -166,9 +166,18 @@ def compile_signals(cfg: dict) -> dict:
     }
 
 
-def score(entry: dict, sig: dict) -> tuple[str | None, list[str]]:
+def score(entry: dict, sig: dict, source: str = "new") -> tuple[str | None, list[str]]:
     """Return (tier, matched signals). Cheap and deterministic on purpose:
-    the expensive judgement happens later, over a short list."""
+    the expensive judgement happens later, over a short list.
+
+    `source` is recorded rather than acted on, deliberately. A post's body *is*
+    the question; a comment is a fragment of someone else's conversation, so a
+    passing mention of "COGS" is worth much less. The temptation is to suppress
+    the weaker source here - but this file is the only place that evidence
+    exists, and suppressing it means never learning whether comment-sourced
+    hits were worth reading. Capture wide, label honestly, and let the reader
+    downstream weigh `from_feed`. Trim once the data says to, not before.
+    """
     text = f"{entry['title']} {entry['body']}"
 
     exact = [w for w, r in sig["exact"] if r.search(text)]
@@ -263,7 +272,7 @@ def main() -> int:
             age = age_hours(e["updated"])
             if age is not None and age > max_age:
                 continue
-            tier, hits = score(e, sig)
+            tier, hits = score(e, sig, feed["kind"])
             if not tier:
                 continue
 
