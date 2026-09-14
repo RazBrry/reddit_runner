@@ -130,6 +130,7 @@ Anything consuming this reads the file over the GitHub API or raw URL and filter
 monitor.py                       fetch, parse, score, store
 config.json                      subreddits, queries, signal vocabularies
 .github/workflows/monitor.yml    schedule, run, commit back
+merge_data.py                    fold a run's data/ into main without rebase conflicts
 data/state.json                  rotation cursor + seen ids
 data/candidates.jsonl            scored hits, append-only
 data/health.json                 last status per feed — the IP diagnosis

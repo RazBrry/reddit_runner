@@ -2,10 +2,11 @@ name: monitor
 
 on:
   schedule:
-    # Every 20 minutes. GitHub delays scheduled runs under load and sometimes
-    # skips them entirely - that is fine here, the rotation just advances more
-    # slowly. See README for the cost maths before changing this.
-    - cron: "*/20 * * * *"
+    # Every 20 minutes, off the hour: GitHub's scheduler is busiest at :00
+    # and delays or drops runs there. It still delays under load and sometimes
+    # skips a tick entirely - that is fine here, the rotation just advances
+    # more slowly. See README for the cost maths before changing this.
+    - cron: "7,27,47 * * * *"
   workflow_dispatch:
     inputs:
       feeds_per_run:
@@ -39,17 +40,27 @@ jobs:
           set -eu
           git config user.name  "reddit-monitor"
           git config user.email "monitor@users.noreply.github.com"
-          git add data
-          if git diff --cached --quiet; then
+          if [ -z "$(git status --porcelain -- data)" ]; then
             echo "nothing changed"
             exit 0
           fi
-          git commit -m "monitor: $(date -u +%Y-%m-%dT%H:%MZ)"
-          # Another run may have pushed while we were sleeping between fetches.
+          # A run takes ~20 minutes. Anything that landed on main meanwhile
+          # (a hand-flipped reviewed flag, a code push) would make a rebase
+          # conflict on data/, so we don't rebase: park the output, reset to
+          # main as it is now, and fold the output back in with merge_data.py.
+          rm -rf /tmp/run-data && cp -r data /tmp/run-data
           for attempt in 1 2 3; do
-            if git push; then exit 0; fi
-            echo "push rejected, rebasing (attempt $attempt)"
-            git pull --rebase --autostash
+            git fetch origin main
+            git reset -q --hard origin/main
+            python3 merge_data.py /tmp/run-data data
+            git add data
+            if git diff --cached --quiet; then
+              echo "nothing new after merge"
+              exit 0
+            fi
+            git commit -q -m "monitor: $(date -u +%Y-%m-%dT%H:%MZ)"
+            if git push origin HEAD:main; then exit 0; fi
+            echo "push rejected, retrying (attempt $attempt)"
           done
           echo "could not push after 3 attempts" >&2
           exit 1
