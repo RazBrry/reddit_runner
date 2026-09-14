@@ -6,7 +6,7 @@ on:
     # and delays or drops runs there. It still delays under load and sometimes
     # skips a tick entirely - that is fine here, the rotation just advances
     # more slowly. See README for the cost maths before changing this.
-    - cron: "7,27,47 * * * *"
+    - cron: "9,29,49 * * * *"
   workflow_dispatch:
     inputs:
       feeds_per_run:
