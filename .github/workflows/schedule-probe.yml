@@ -1,0 +1,12 @@
+name: schedule-probe
+# Temporary: proves whether cron triggers fire on this repo at all. Remove once
+# monitor.yml has run on schedule.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "probe fired at $(date -u)"
