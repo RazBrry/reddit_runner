@@ -1,0 +1,55 @@
+name: monitor
+
+on:
+  schedule:
+    # Every 20 minutes. GitHub delays scheduled runs under load and sometimes
+    # skips them entirely - that is fine here, the rotation just advances more
+    # slowly. See README for the cost maths before changing this.
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+    inputs:
+      feeds_per_run:
+        description: "Feeds to fetch this run (overrides config.json)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  # Runs write to data/ and push. Never let two overlap.
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Poll feeds
+        env:
+          MONITOR_BATCH: ${{ github.event.inputs.feeds_per_run }}
+        run: python3 monitor.py
+
+      - name: Commit findings
+        run: |
+          set -eu
+          git config user.name  "reddit-monitor"
+          git config user.email "monitor@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "nothing changed"
+            exit 0
+          fi
+          git commit -m "monitor: $(date -u +%Y-%m-%dT%H:%MZ)"
+          # Another run may have pushed while we were sleeping between fetches.
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            echo "push rejected, rebasing (attempt $attempt)"
+            git pull --rebase --autostash
+          done
+          echo "could not push after 3 attempts" >&2
+          exit 1

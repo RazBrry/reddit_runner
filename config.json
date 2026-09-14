@@ -1,0 +1,122 @@
+{
+ "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36",
+ "feeds_per_run": 3,
+ "max_age_hours": 72,
+ "subreddits": {
+  "core": [
+   "FulfillmentByAmazon",
+   "AmazonSeller",
+   "AmazonFBA"
+  ],
+  "fringe": [
+   "ecommerce",
+   "smallbusiness"
+  ]
+ },
+ "search_queries": [
+  "amazon settlement report reconcile",
+  "FBA payout bank mismatch",
+  "amazon seller VAT OSS registration",
+  "amazon reserve amount explained",
+  "FBA reimbursement missing inventory",
+  "marketplace facilitator VAT seller"
+ ],
+ "signals": {
+  "_comment": "exact_fee_names are settlement-report constants: unambiguous, one hit is enough, but rarely typed by humans. domain_terms are what sellers actually write; they need a problem_phrase or an amount beside them to reach tier A. Calibrated 2026-09-14 against a live r/FulfillmentByAmazon feed.",
+  "exact_fee_names": [
+   "Current Reserve Amount",
+   "Previous Reserve Amount Balance",
+   "MarketplaceFacilitatorVAT",
+   "ItemWithheldTax",
+   "Cross-Account Debt Adjustment",
+   "Digital Services Fee",
+   "WAREHOUSE_DAMAGE",
+   "WAREHOUSE_LOST",
+   "MISSING_FROM_INBOUND",
+   "Long Term Storage Fee",
+   "Inbound Transportation Charge",
+   "Eco-contribution",
+   "Vine Enrollment",
+   "settlement report",
+   "settlement id",
+   "date range report"
+  ],
+  "domain_terms": [
+   "reimbursement",
+   "inbound shortage",
+   "inbound discrepancy",
+   "lost inventory",
+   "damaged inventory",
+   "missing units",
+   "missing inventory",
+   "removal order",
+   "disposal order",
+   "storage fee",
+   "referral fee",
+   "fba fee",
+   "fulfillment fee",
+   "debt adjustment",
+   "reserve balance",
+   "reserved balance",
+   "disbursement",
+   "payout",
+   "settlement",
+   "chargeback",
+   "refund admin fee"
+  ],
+  "problem_phrases": [
+   "doesn't match",
+   "does not match",
+   "doesnt match",
+   "off by",
+   "can't reconcile",
+   "cannot reconcile",
+   "won't reconcile",
+   "reconcile",
+   "bank shows",
+   "numbers don't add up",
+   "numbers dont add up",
+   "discrepancy",
+   "out of balance",
+   "missing money",
+   "short paid",
+   "underpaid",
+   "owes you",
+   "owes me",
+   "owed",
+   "shortage",
+   "stay on top of",
+   "keep track of",
+   "how do i track",
+   "never got",
+   "didn't get paid",
+   "short by"
+  ],
+  "tier_b_keywords": [
+   "OSS return",
+   "One Stop Shop",
+   "IOSS",
+   "VAT registration",
+   "VAT threshold",
+   "distance selling",
+   "pan-eu",
+   "pan eu",
+   "COGS",
+   "cost of goods",
+   "product cost",
+   "landed cost",
+   "inventory valuation",
+   "intrastat",
+   "EPR registration",
+   "bookkeeping",
+   "accountant",
+   "profit and loss",
+   "p&l"
+  ],
+  "tier_c_patterns": [
+   "(which|what|best|recommend\\w*).{0,40}(accounting|bookkeeping) (software|tool|app)",
+   "(alternative to|instead of).{0,30}(quickbooks|xero|a2x|link my books|sellerboard|taxdoo)",
+   "how do (you|people) do (your |their )?(books|bookkeeping|accounting)"
+  ]
+ }
+}
