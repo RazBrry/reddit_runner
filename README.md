@@ -45,8 +45,18 @@ why a run fetching 3 feeds takes about two and a half minutes, most of it asleep
 2. **Settings → Actions → General → Workflow permissions** → *Read and write*.
    Without it the workflow cannot commit its findings back.
 3. **Actions** tab → *monitor* → **Run workflow**. Don't wait for the schedule;
-   the first run is the one that tells you whether this works at all.
+   the first run is the one that tells you whether this works at all, and it
+   also starts the chain (see *How it keeps time*).
 4. Open `data/health.json`.
+
+### How it keeps time
+
+Every run dispatches the next one, after padding itself out to
+`INTERVAL_MINUTES` (20, set in the workflow). GitHub's own cron is unreliable
+on this account — one scheduled run in ten hours was measured — so it is kept
+only as a watchdog that restarts the chain if a run dies. To pause the whole
+thing, disable the workflow in the Actions tab; the next dispatch then fails
+and the chain stops. Re-enable and press **Run workflow** to start it again.
 
 ### Reading the first run
 
@@ -63,21 +73,21 @@ worth more than a test that passes.
 
 ## What it costs
 
-GitHub bills a **minimum of one minute per job**, so cost tracks the number of
-runs, not their length.
+Because each run sleeps until the next one is due, a job occupies a runner for
+the whole interval: 72 runs/day × 20 minutes.
 
 | Repo | Every 20 min (72 runs/day) |
 |---|---|
 | **Public** | free — public repositories get unlimited Actions minutes |
-| **Private** | ~180 min/day ≈ 5,400/month, against 2,000 free or 3,000 on Pro |
+| **Private** | ~1,440 min/day, far beyond the 2,000/month free or 3,000 on Pro |
 
-Private is not viable at a useful cadence without paying for minutes. Public is
+Private is not viable at this cadence. Public is
 free, but then the sub list and keywords are readable by anyone — including the
 communities being monitored. Nothing in this repository names a company or a
 product, and that is deliberate: keep it that way and a public repo is a generic
 Amazon-seller feed reader rather than a discoverable marketing artefact.
 
-To spend less: raise the cron interval, or drop `feeds_per_run` to 2.
+To spend less: raise `INTERVAL_MINUTES` in the workflow, or drop `feeds_per_run` to 2.
 
 ---
 
@@ -129,7 +139,7 @@ Anything consuming this reads the file over the GitHub API or raw URL and filter
 ```
 monitor.py                       fetch, parse, score, store
 config.json                      subreddits, queries, signal vocabularies
-.github/workflows/monitor.yml    schedule, run, commit back
+.github/workflows/monitor.yml    run, commit back, dispatch the next run; cron as watchdog
 merge_data.py                    fold a run's data/ into main without rebase conflicts
 data/state.json                  rotation cursor + seen ids
 data/candidates.jsonl            scored hits, append-only
