@@ -23,5 +23,20 @@
   "status": 200,
   "entries": 25,
   "at": "2026-09-14T20:24:14+00:00"
+ },
+ "https://www.reddit.com/r/AmazonFBA/comments/.rss": {
+  "status": 200,
+  "entries": 25,
+  "at": "2026-09-15T01:37:35+00:00"
+ },
+ "https://www.reddit.com/r/shopify/new/.rss": {
+  "status": 200,
+  "entries": 25,
+  "at": "2026-09-15T01:38:35+00:00"
+ },
+ "https://www.reddit.com/r/shopify/comments/.rss": {
+  "status": 200,
+  "entries": 25,
+  "at": "2026-09-15T01:39:35+00:00"
  }
 }
