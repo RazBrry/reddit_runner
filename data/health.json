@@ -12,17 +12,17 @@
  "https://www.reddit.com/r/AmazonSeller/new/.rss": {
   "status": 200,
   "entries": 25,
-  "at": "2026-10-04T13:30:24+00:00"
+  "at": "2026-10-04T15:50:23+00:00"
  },
  "https://www.reddit.com/r/AmazonSeller/comments/.rss": {
   "status": 200,
   "entries": 25,
-  "at": "2026-10-04T13:31:25+00:00"
+  "at": "2026-10-04T15:51:24+00:00"
  },
  "https://www.reddit.com/r/AmazonFBA/new/.rss": {
-  "status": 0,
-  "entries": 0,
-  "at": "2026-10-04T13:49:57+00:00"
+  "status": 200,
+  "entries": 25,
+  "at": "2026-10-04T15:52:24+00:00"
  },
  "https://www.reddit.com/r/AmazonFBA/comments/.rss": {
   "status": 200,
