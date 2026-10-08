@@ -86,17 +86,17 @@
  },
  "https://www.reddit.com/search/.rss?q=amazon+reserve+amount+explained&sort=new&t=week": {
   "status": 200,
-  "entries": 25,
-  "at": "2026-10-08T07:41:10+00:00"
+  "entries": 3,
+  "at": "2026-10-08T10:01:03+00:00"
  },
  "https://www.reddit.com/search/.rss?q=FBA+reimbursement+missing+inventory&sort=new&t=week": {
   "status": 200,
   "entries": 22,
-  "at": "2026-10-08T07:42:11+00:00"
+  "at": "2026-10-08T10:02:04+00:00"
  },
  "https://www.reddit.com/search/.rss?q=marketplace+facilitator+VAT+seller&sort=new&t=week": {
   "status": 200,
   "entries": 22,
-  "at": "2026-10-08T08:00:18+00:00"
+  "at": "2026-10-08T10:03:04+00:00"
  }
 }
