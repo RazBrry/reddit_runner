@@ -67,17 +67,17 @@
  "https://www.reddit.com/r/ebay/new/.rss": {
   "status": 200,
   "entries": 25,
-  "at": "2026-10-12T23:08:52+00:00"
+  "at": "2026-10-13T01:28:51+00:00"
  },
  "https://www.reddit.com/search/.rss?q=amazon+settlement+report+reconcile&sort=new&t=week": {
   "status": 200,
-  "entries": 0,
-  "at": "2026-10-12T23:09:52+00:00"
+  "entries": 22,
+  "at": "2026-10-13T01:29:51+00:00"
  },
  "https://www.reddit.com/search/.rss?q=FBA+payout+bank+mismatch&sort=new&t=week": {
   "status": 200,
   "entries": 22,
-  "at": "2026-10-12T23:28:00+00:00"
+  "at": "2026-10-13T01:30:52+00:00"
  },
  "https://www.reddit.com/search/.rss?q=amazon+seller+VAT+OSS+registration&sort=new&t=week": {
   "status": 200,
