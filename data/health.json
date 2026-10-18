@@ -32,17 +32,17 @@
  "https://www.reddit.com/r/shopify/new/.rss": {
   "status": 200,
   "entries": 25,
-  "at": "2026-10-18T03:41:22+00:00"
+  "at": "2026-10-18T06:01:19+00:00"
  },
  "https://www.reddit.com/r/shopify/comments/.rss": {
   "status": 200,
   "entries": 25,
-  "at": "2026-10-18T03:42:23+00:00"
+  "at": "2026-10-18T06:02:19+00:00"
  },
  "https://www.reddit.com/r/ecommerce/new/.rss": {
-  "status": 403,
-  "entries": 0,
-  "at": "2026-10-18T04:00:30+00:00"
+  "status": 200,
+  "entries": 25,
+  "at": "2026-10-18T06:03:19+00:00"
  },
  "https://www.reddit.com/r/ecommerce/comments/.rss": {
   "status": 403,
