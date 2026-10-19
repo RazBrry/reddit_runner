@@ -40,19 +40,19 @@
   "at": "2026-10-19T20:02:26+00:00"
  },
  "https://www.reddit.com/r/ecommerce/new/.rss": {
-  "status": 403,
-  "entries": 0,
-  "at": "2026-10-19T18:00:19+00:00"
+  "status": 200,
+  "entries": 25,
+  "at": "2026-10-19T20:20:33+00:00"
  },
  "https://www.reddit.com/r/ecommerce/comments/.rss": {
-  "status": 403,
-  "entries": 0,
-  "at": "2026-10-19T18:01:20+00:00"
+  "status": 200,
+  "entries": 25,
+  "at": "2026-10-19T20:21:34+00:00"
  },
  "https://www.reddit.com/r/woocommerce/new/.rss": {
   "status": 200,
   "entries": 25,
-  "at": "2026-10-19T18:19:29+00:00"
+  "at": "2026-10-19T20:22:34+00:00"
  },
  "https://www.reddit.com/r/smallbusiness/new/.rss": {
   "status": 200,
